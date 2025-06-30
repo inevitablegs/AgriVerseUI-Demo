@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAI - Smart Plant Disease Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        'earth-brown': {
+                            500: '#8b5a2b',
+                            600: '#7c4a1e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .leaf-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm10 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-agri-green-50 via-white to-agri-green-100 min-h-screen leaf-pattern">
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg border-b border-agri-green-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-agri-green-500 to-agri-green-700 rounded-xl flex items-center justify-center mr-3 animate-pulse-slow">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v4a1 1 0 001 1h1a1 1 0 001-1V5a1 1 0 001-1 1 1 0 00-1-1H4a1 1 0 00-1 1zm6 2a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm2 0a1 1 0 011-1h.01a1 1 0 110 2H12a1 1 0 01-1-1zm2 0a1 1 0 011-1h.01a1 1 0 110 2H14a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl font-bold gradient-text">AgriAI</h1>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#" class="text-agri-green-800 hover:text-agri-green-600 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-agri-green-100">Dashboard</a>
+                        <a href="#" class="text-agri-green-700 hover:text-agri-green-600 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-agri-green-100">Plant Analysis</a>
+                        <button class="bg-agri-green-600 hover:bg-agri-green-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all transform hover:scale-105 shadow-lg">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <div class="animate-float mb-8">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-agri-green-100 text-agri-green-800 text-sm font-medium">
+                        🌱 AI-Powered Plant Health Analysis
+                    </div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                    Welcome to <span class="gradient-text">AgriAI</span>
+                </h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Transform your farming with intelligent plant disease detection. Upload photos, get instant analysis, and receive expert treatment recommendations.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plant Analysis Section -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-agri-green-200">
+            <div class="bg-gradient-to-r from-agri-green-600 to-agri-green-700 px-8 py-6">
+                <h3 class="text-2xl font-bold text-white flex items-center">
+                    🔬 Plant Disease Analysis
+                    <span class="ml-3 px-3 py-1 bg-white/20 rounded-full text-sm">AI-Powered</span>
+                </h3>
+            </div>
+            
+            <div class="p-8">
+                <!-- Upload Section -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Image Upload -->
+                    <div class="space-y-6">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center">
+                            📸 Upload Plant Image
+                        </h4>
+                        <div class="border-2 border-dashed border-agri-green-300 rounded-2xl p-8 text-center hover:border-agri-green-500 transition-colors cursor-pointer group">
+                            <div class="space-y-4">
+                                <div class="w-16 h-16 bg-agri-green-100 rounded-full flex items-center justify-center mx-auto group-hover:bg-agri-green-200 transition-colors">
+                                    <svg class="w-8 h-8 text-agri-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600 font-medium">Drop your plant image here</p>
+                                    <p class="text-sm text-gray-500">or click to browse files</p>
+                                </div>
+                                <button class="bg-agri-green-600 hover:bg-agri-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg">
+                                    Choose File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Manual Description -->
+                    <div class="space-y-6">
+                        <h4 class="text-xl font-semibold text-gray-800 flex items-center">
+                            ✍️ Describe Symptoms
+                        </h4>
+                        <div class="space-y-4">
+                            <textarea 
+                                class="w-full h-32 px-4 py-3 border border-agri-green-300 rounded-lg resize-none focus:ring-2 focus:ring-agri-green-500 focus:border-transparent" 
+                                placeholder="Example: Yellow spots on leaves, wilting stems, brown edges..."
+                            ></textarea>
+                            <button class="w-full bg-gradient-to-r from-agri-green-600 to-agri-green-700 hover:from-agri-green-700 hover:to-agri-green-800 text-white py-3 rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg">
+                                🔍 Analyze Symptoms
+                            </button>
+                        </div>
+                        
+                        <!-- Quick Symptom Tags -->
+                        <div class="space-y-3">
+                            <p class="text-sm font-medium text-gray-700">Quick symptoms:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-agri-green-100 text-agri-green-800 rounded-full text-sm cursor-pointer hover:bg-agri-green-200 transition-colors">Yellow leaves</span>
+                                <span class="px-3 py-1 bg-agri-green-100 text-agri-green-800 rounded-full text-sm cursor-pointer hover:bg-agri-green-200 transition-colors">Brown spots</span>
+                                <span class="px-3 py-1 bg-agri-green-100 text-agri-green-800 rounded-full text-sm cursor-pointer hover:bg-agri-green-200 transition-colors">Wilting</span>
+                                <span class="px-3 py-1 bg-agri-green-100 text-agri-green-800 rounded-full text-sm cursor-pointer hover:bg-agri-green-200 transition-colors">Leaf curl</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">Why Choose AgriAI?</h3>
+            <p class="text-lg text-gray-600">Advanced AI technology meets agricultural expertise</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-agri-green-200 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-gradient-to-br from-agri-green-500 to-agri-green-600 rounded-2xl flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">95% Accuracy</h4>
+                <p class="text-gray-600">Industry-leading AI models trained on thousands of plant diseases for precise identification.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-agri-green-200 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-gradient-to-br from-agri-green-500 to-agri-green-600 rounded-2xl flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                    </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">Expert Support</h4>
+                <p class="text-gray-600">Access to agricultural specialists and proven treatment recommendations.</p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-agri-green-200 hover:shadow-xl transition-shadow">
+                <div class="w-16 h-16 bg-gradient-to-br from-agri-green-500 to-agri-green-600 rounded-2xl flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                </div>
+                <h4 class="text-xl font-bold text-gray-900 mb-3">Real-time Analysis</h4>
+                <p class="text-gray-600">Get instant results and recommendations to save your crops before it's too late.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section (Example) -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-gradient-to-br from-white to-agri-green-50 rounded-3xl shadow-2xl border border-agri-green-200 overflow-hidden">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">Analysis Results</h3>
+                    <span class="px-4 py-2 bg-agri-green-100 text-agri-green-800 rounded-full text-sm font-medium">
+                        ✅ Analysis Complete
+                    </span>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Disease Identification -->
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-agri-green-200">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                                🦠 Disease Identified
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-medium text-gray-700">Leaf Blight</span>
+                                    <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">High Risk</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-agri-green-600 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600">87% confidence match</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-agri-green-200">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                                📊 Severity Level
+                            </h4>
+                            <div class="flex items-center space-x-3">
+                                <div class="flex space-x-1">
+                                    <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                                    <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                                    <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                                    <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                                    <div class="w-4 h-4 bg-gray-300 rounded-full"></div>
+                                </div>
+                                <span class="font-medium text-red-600">Moderate</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Recommendations -->
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-agri-green-200">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                                💊 Treatment Plan
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 bg-agri-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span class="text-agri-green-600 text-sm font-bold">1</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-900">Apply copper fungicide</p>
+                                        <p class="text-sm text-gray-600">Spray every 7-10 days</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 bg-agri-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span class="text-agri-green-600 text-sm font-bold">2</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-900">Improve air circulation</p>
+                                        <p class="text-sm text-gray-600">Prune affected leaves</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gradient-to-r from-agri-green-600 to-agri-green-700 hover:from-agri-green-700 hover:to-agri-green-800 text-white py-4 rounded-xl font-medium transition-all transform hover:scale-105 shadow-lg">
+                            📄 Download Full Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-agri-green-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v4a1 1 0 001 1h1a1 1 0 001-1V5a1 1 0 001-1 1 1 0 00-1-1H4a1 1 0 00-1 1zm6 2a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm2 0a1 1 0 011-1h.01a1 1 0 110 2H12a1 1 0 01-1-1zm2 0a1 1 0 011-1h.01a1 1 0 110 2H14a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">AgriAI</h3>
+                    </div>
+                    <p class="text-gray-400">Revolutionizing agriculture with AI-powered plant disease detection.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Features</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Disease Detection</li>
+                        <li>Treatment Plans</li>
+                        <li>Expert Consultation</li>
+                        <li>Crop Monitoring</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Help Center</li>
+                        <li>Documentation</li>
+                        <li>Community</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-agri-green-600 transition-colors cursor-pointer">
+                            <span class="text-sm">f</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-agri-green-600 transition-colors cursor-pointer">
+                            <span class="text-sm">t</span>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-agri-green-600 transition-colors cursor-pointer">
+                            <span class="text-sm">in</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 AgriAI. All rights reserved. Powered by advanced AI technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add click handlers for symptom tags
+        document.querySelectorAll('.cursor-pointer').forEach(tag => {
+            tag.addEventListener('click', function() {
+                const textarea = document.querySelector('textarea');
+                const currentValue = textarea.value;
+                const tagText = this.textContent;
+                
+                if (currentValue) {
+                    textarea.value = currentValue + ', ' + tagText;
+                } else {
+                    textarea.value = tagText;
+                }
+                
+                // Add visual feedback
+                this.classList.add('bg-agri-green-200', 'scale-95');
+                setTimeout(() => {
+                    this.classList.remove('scale-95');
+                }, 150);
+            });
+        });
+
+        // Add hover effect to upload area
+        const uploadArea = document.querySelector('.border-dashed');
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('border-agri-green-500', 'bg-agri-green-50');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-agri-green-500', 'bg-agri-green-50');
+        });
+    </script>
+</body>
+</html>
